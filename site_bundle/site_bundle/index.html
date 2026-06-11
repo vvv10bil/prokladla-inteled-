@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InteledAI - Звільнись від клопотів!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-gradient-start: #e8f4fc;
+            --bg-gradient-end: #d4ebf7;
+            --header-blue: #5ba3e0;
+            --purple-main: #8b6cff;
+            --purple-dark: #7c5cff;
+            --purple-light: #a890ff;
+            --yellow-accent: #ffd644;
+            --teal-accent: #4ecdc4;
+            --pink-brain: #ffb3c6;
+            --white: #ffffff;
+            --text-dark: #1a1a2e;
+            --text-gray: #666;
+            --shadow-card: 0 25px 80px rgba(0, 0, 0, 0.12);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Хвилясті лінії на фоні */
+        .bg-waves {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            opacity: 0.08;
+        }
+
+        .wave-1 {
+            top: 10%;
+            left: -20%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%235ba3e0' d='M0,160L48,170.7C96,181,192,203,288,186.7C384,171,480,117,576,112C672,107,768,149,864,154.7C960,160,1056,128,1152,117.3C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+            background-size: cover;
+            transform: rotate(-3deg);
+        }
+
+        .wave-2 {
+            top: 40%;
+            right: -30%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%238b6cff' d='M0,96L48,112C96,128,192,160,288,165.3C384,171,480,149,576,154.7C672,160,768,192,864,197.3C960,203,1056,181,1152,154.7C1248,128,1344,96,1392,80L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+            background-size: cover;
+            transform: rotate(5deg);
+        }
+
+        .wave-3 {
+            bottom: 5%;
+            left: -10%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%234ecdc4' d='M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,218.7C672,235,768,245,864,234.7C960,224,1056,192,1152,181.3C1248,171,1344,181,1392,186.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+            background-size: cover;
+            transform: rotate(-5deg);
+        }
+
+        /* Великі літери IA на фоні */
+        .bg-letters {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40vw;
+            font-weight: 900;
+            color: rgba(78, 205, 196, 0.08);
+            letter-spacing: -0.05em;
+            pointer-events: none;
+            z-index: 0;
+            white-space: nowrap;
+        }
+
+        /* Головна картка */
+        .main-card {
+            display: flex;
+            align-items: stretch;
+            background: var(--white);
+            border-radius: 30px;
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            max-width: 920px;
+            width: 90%;
+            margin: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ліва частина - Реальне відео */
+        .video-section {
+            flex: 0 0 300px;
+            background: #000;
+            position: relative;
+            min-height: 520px;
+            overflow: hidden;
+        }
+
+        .video-content {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+        }
+
+        /* Права частина - Контент */
+        .content-section {
+            flex: 1;
+            padding: 40px 35px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* Логотип InteledAI - точна копія */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: -0.5px;
+        }
+
+        /* Заголовок */
+        .main-title {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        /* Фіолетовий блок з кнопками */
+        .purple-box {
+            background: linear-gradient(135deg, var(--purple-main) 0%, var(--purple-dark) 100%);
+            border-radius: 25px;
+            padding: 28px 32px;
+            width: 100%;
+            max-width: 380px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Топографічні лінії */
+        .purple-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cpath fill='none' stroke='rgba(255,255,255,0.1)' stroke-width='1.5' d='M0,50 Q100,30 200,50 T400,50 M0,100 Q100,80 200,100 T400,100 M0,150 Q100,130 200,150 T400,150 M0,200 Q100,180 200,200 T400,200 M0,250 Q100,230 200,250 T400,250 M0,300 Q100,280 200,300 T400,300 M0,350 Q100,330 200,350 T400,350'/%3E%3C/svg%3E");
+            background-size: cover;
+            pointer-events: none;
+        }
+
+        .purple-subtitle {
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Підзаголовок з вказівником */
+        .select-course {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.9);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pointing-hand {
+            font-size: 1.3rem;
+            animation: pointDown 1s ease-in-out infinite;
+        }
+
+        @keyframes pointDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(5px); }
+        }
+
+        /* Кнопки */
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .course-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 18px 30px;
+            background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple-main) 100%);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50px;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(139, 108, 255, 0.4);
+        }
+
+        .course-btn:hover {
+            background: linear-gradient(135deg, #b8a3ff 0%, #9d84ff 100%);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(139, 108, 255, 0.5);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .course-btn:active {
+            transform: translateY(-2px);
+        }
+
+        .btn-emoji {
+            font-size: 1.4rem;
+        }
+
+
+        /* Адаптивність */
+        @media (max-width: 800px) {
+            .main-card {
+                flex-direction: column;
+                max-width: 420px;
+            }
+
+            .video-section {
+                flex: none;
+                min-height: 420px;
+            }
+
+            .content-section {
+                padding: 30px 25px;
+            }
+
+            .main-title {
+                font-size: 1.4rem;
+            }
+
+            .purple-box {
+                padding: 22px 18px;
+            }
+
+            .purple-subtitle {
+                font-size: 1.05rem;
+            }
+
+            .select-course {
+                font-size: 0.9rem;
+            }
+
+            .course-btn {
+                padding: 16px 25px;
+                font-size: 1rem;
+            }
+
+            .logo-text {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Хвилясті лінії на фоні -->
+    <div class="bg-waves">
+        <div class="wave wave-1"></div>
+        <div class="wave wave-2"></div>
+        <div class="wave wave-3"></div>
+    </div>
+
+    <!-- Великі літери IA -->
+    <div class="bg-letters">IA</div>
+
+    <!-- Головна картка -->
+    <div class="main-card">
+        <!-- Ліва частина - Реальне відео -->
+        <div class="video-section">
+            <video id="mainVideo" class="video-content" autoplay muted loop playsinline controls>
+                <source src="IMG_2038.MP4" type="video/mp4">
+                Ваш браузер не підтримує відео.
+            </video>
+        </div>
+
+        <!-- Права частина - Контент -->
+        <div class="content-section">
+            <!-- Логотип InteledAI (оригінал) -->
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="https://inteled.club/assets/Logo.png" alt="InteledAI Logo">
+                </div>
+                <span class="logo-text">InteledAI</span>
+            </div>
+
+            <!-- Заголовок -->
+            <h1 class="main-title">Твій рятівник у світі знань</h1>
+
+            <!-- Фіолетовий блок з кнопками -->
+            <div class="purple-box">
+                <p class="purple-subtitle">Звільнись від клопотів!</p>
+                
+                <!-- Підзаголовок з вказівником -->
+                <div class="select-course">
+                    <span class="pointing-hand">👇</span>
+                    <span>Обери курс на якому навчаєшся</span>
+                </div>
+                
+                <div class="buttons-container">
+                    <a href="https://inteled.club/" class="course-btn">
+                        <span class="btn-emoji">👩‍🎓</span>
+                        <span>1-4 курси, коледж</span>
+                    </a>
+                    
+                    <a href="https://inteled.club/" class="course-btn">
+                        <span class="btn-emoji">👩‍🎓</span>
+                        <span>5-6 курси, вище</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('mainVideo');
+        
+        // При кліку на відео - вмикаємо звук і переглядаємо спочатку
+        video.addEventListener('click', function() {
+            if (this.muted) {
+                this.muted = false;
+                this.currentTime = 0;
+                this.play();
+            }
+        });
+    </script>
+</body>
+</html>
